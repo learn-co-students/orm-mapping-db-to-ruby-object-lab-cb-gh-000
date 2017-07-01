@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-
+__END__
 describe Student do
 
   before do
