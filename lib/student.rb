@@ -64,38 +64,69 @@ class Student
     DB[:conn].execute(sql)
   end
 
+
+  def self.count_all_students_in_grade_9
+    sql = <<-SQL
+      SELECT *
+      FROM students
+      WHERE grade = "9"
+    SQL
+
+    DB[:conn].execute(sql).map do |row|
+       self.new_from_db(row)
+    end
+  end
+
   def self.students_below_12th_grade
     sql = <<-SQL
       SELECT *
       FROM students
-      WHERE grade < 12
+      WHERE grade < "12"
     SQL
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end
 
+    DB[:conn].execute(sql).map do |row|
+       self.new_from_db(row)
+    end
   end
 
-  def self.count_all_students_in_grade_9
+  def self.first_x_students_in_grade_10(x)
     sql = <<-SQL
-      SELECT COUNT(*)
+      SELECT *
       FROM students
-      WHERE grade = 9;
+      WHERE grade = "10"
+      LIMIT ?
     SQL
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end
+
+    DB[:conn].execute(sql, x).map do |row|
+	     self.new_from_db(row)
+	  end
   end
+
 
   def self.first_student_in_grade_10
     sql = <<-SQL
       SELECT *
       FROM students
-      WHERE grade = 10
-      ORDER BY students.id ASC LIMIT 1
+      WHERE grade = "10"
+      LIMIT 1
     SQL
+
     DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end.first
+	     self.new_from_db(row)
+	  end.first
+
+
+  end
+
+  def self.all_students_in_grade_x(x)
+    sql = <<-SQL
+      SELECT *
+      FROM students
+      WHERE grade = ?
+    SQL
+
+    DB[:conn].execute(sql, x).map do |row|
+	     self.new_from_db(row)
+	  end
   end
 end
