@@ -2,7 +2,7 @@
 
 ## Objectives
 
-- Write a method that turns database rows into Ruby objects
+- Write a methods that turns database rows into Ruby objects
 - Write methods that allow you to search a database
 
 ## Overview
