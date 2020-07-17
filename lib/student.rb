@@ -36,7 +36,11 @@ class Student
   end
 
   def self.first_student_in_grade_10
-    Student.first_X_students_in_grade_10(1)
+    sql="SELECT * FROM students WHERE grade=10 LIMIT 1"
+    arr=DB[:conn].execute(sql)
+    arr.collect do |row|
+      Student.new_from_db(row)
+    end.first
   end
 
   def self.all_students_in_grade_X(number)
